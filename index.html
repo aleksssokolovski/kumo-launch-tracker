@@ -120,7 +120,7 @@
     <div class="badge">🚀 Release Launch Tracker</div>
     <h1>Kumo Releases Launch Tracker</h1>
     <div class="subtitle">Tracking all Kumo releases across the NVIDIA SW-GPU organization</div>
-    <div class="timestamp"><span class="glow-dot"></span>&nbsp; Last updated: October 27, 2026 16:01 <span id="lastUpdated">loading…</span> · 🔄 Data refreshed daily at 13:00 Europe (GMT+1) &amp; 13:00 PST</div>
+    <div class="timestamp"><span class="glow-dot"></span>&nbsp; Last updated: October 27, 2026 17:07 <span id="lastUpdated">loading…</span> · 🔄 Data refreshed daily at 13:00 Europe (GMT+1) &amp; 13:00 PST</div>
   </div>
 
   <!-- KPI Cards -->
@@ -384,7 +384,7 @@ function renderCharts() {
     yAxis:{type:'category',releases,axisLabel:{color:'#94a3b8',fontSize:10,width:180,overflow:'truncate'},axisLine:{lineStyle:{color:'#1e293b'}}},
     series:[
       {name:'Code Freeze',type:'scatter',data:freezeData,symbolSize:10,itemStyle:{color:'#f59e0b'}},
-      {name:'Release',type:'scatter',releaseData,symbolSize:12,symbol:'diamond',itemStyle:{color:'#22c55e'}}
+      {name:'Release',type:'scatter',data:releaseData,symbolSize:12,symbol:'diamond',itemStyle:{color:'#22c55e'}}
     ]
   });
 
