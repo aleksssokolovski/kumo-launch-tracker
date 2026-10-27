@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🚀 Kumo Products Launch Tracker</title>
+<title>🚀 Kumo Releases Launch Tracker</title>
 <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
@@ -117,10 +117,10 @@
     <div class="logo">
       <img src="https://raw.githubusercontent.com/NVIDIA/kumo-engine/main/assets/kumo-engine-dark.svg" alt="Kumo" height="80">
     </div>
-    <div class="badge">🚀 Product Launch Tracker</div>
-    <h1>Kumo Products Launch Tracker</h1>
-    <div class="subtitle">Tracking all Kumo product releases across the NVIDIA SW-GPU organization</div>
-    <div class="timestamp"><span class="glow-dot"></span>&nbsp; Last updated: October 27, 2026 15:42 <span id="lastUpdated">loading…</span> · 🔄 Data refreshed daily at 13:00 Europe (GMT+1) &amp; 13:00 PST</div>
+    <div class="badge">🚀 Release Launch Tracker</div>
+    <h1>Kumo Releases Launch Tracker</h1>
+    <div class="subtitle">Tracking all Kumo releases across the NVIDIA SW-GPU organization</div>
+    <div class="timestamp"><span class="glow-dot"></span>&nbsp; Last updated: October 27, 2026 16:01 <span id="lastUpdated">loading…</span> · 🔄 Data refreshed daily at 13:00 Europe (GMT+1) &amp; 13:00 PST</div>
   </div>
 
   <!-- KPI Cards -->
@@ -131,7 +131,7 @@
     <div class="section">
       <div class="section-header">
         <h2>📊 Status Distribution</h2>
-        <span class="section-badge" style="background:rgba(168,85,247,0.12);color:var(--accent-purple)">All Products</span>
+        <span class="section-badge" style="background:rgba(168,85,247,0.12);color:var(--accent-purple)">All Releases</span>
       </div>
       <div id="statusChart" style="min-height:300px"></div>
     </div>
@@ -155,7 +155,7 @@
 
   <!-- Filters + Search -->
   <div class="filter-bar">
-    <input type="text" class="search-box" id="searchBox" placeholder="🔍 Search products, PICs, versions...">
+    <input type="text" class="search-box" id="searchBox" placeholder="🔍 Search releases, PICs, versions...">
     <select class="month-select" id="monthSelect">
       <option value="all">📅 All Months</option>
       <option value="August">August 2026</option>
@@ -180,13 +180,13 @@
   <!-- Raw Data Log -->
   <div class="section">
     <div class="section-header">
-      <h2>📋 Full Product Log</h2>
+      <h2>📋 Full Release Log</h2>
       <span class="section-badge" style="background:rgba(118,185,0,0.12);color:var(--nv-green)">Raw Data</span>
     </div>
     <div style="overflow-x:auto">
       <table id="logTable">
         <thead><tr>
-          <th>Month</th><th>Product</th><th>Version</th><th>PIC</th>
+          <th>Month</th><th>Release</th><th>Version</th><th>PIC</th>
           <th>Freeze (Plan)</th><th>Freeze (Act)</th><th>Release (Plan)</th><th>Release (Act)</th><th>Status</th>
         </tr></thead>
         <tbody></tbody>
@@ -320,7 +320,7 @@ function renderKPIs() {
   const upcoming = DATA.filter(d => { const s = normalizeStatus(d.status); return s !== "Complete" && s !== "N/A"; }).length;
 
   const cards = [
-    {icon:"📦",value:total,label:"Total Products",color:"#76b900"},
+    {icon:"📦",value:total,label:"Total Releases",color:"#76b900"},
     {icon:"✅",value:complete,label:"Completed",color:"#22c55e"},
     {icon:"🔵",value:onTrack,label:"On Track",color:"#3b82f6"},
     {icon:"🚀",value:upcoming,label:"In Pipeline",color:"#f59e0b"},
@@ -368,20 +368,20 @@ function renderCharts() {
     }]
   });
 
-  // Timeline scatter — products with freeze/release dates
+  // Timeline scatter — releases with freeze/release dates
   const withDates = DATA.filter(d => d.freeze_planned || d.release_planned);
-  const products = withDates.map(d => d.product.substring(0, 30));
+  const releases = withDates.map(d => d.product.substring(0, 30));
   const freezeData = withDates.map((d, i) => d.freeze_planned ? [d.freeze_planned, i] : null).filter(Boolean);
   const releaseData = withDates.map((d, i) => (d.release_actual || d.release_planned) ? [(d.release_actual || d.release_planned), i] : null).filter(Boolean);
 
   const timeline = echarts.init(document.getElementById('timelineChart'));
   timeline.setOption({
     backgroundColor:'transparent',
-    tooltip:{trigger:'item',formatter:p => `${products[p.value[1]]}<br/>${p.seriesName}: ${p.value[0]}`},
+    tooltip:{trigger:'item',formatter:p => `${releases[p.value[1]]}<br/>${p.seriesName}: ${p.value[0]}`},
     legend:{bottom:0,textStyle:{color:'#94a3b8',fontSize:11}},
     grid:{left:200,right:30,top:20,bottom:50},
     xAxis:{type:'time',axisLabel:{color:'#64748b'},axisLine:{lineStyle:{color:'#1e293b'}},splitLine:{lineStyle:{color:'rgba(255,255,255,0.04)'}}},
-    yAxis:{type:'category',products,axisLabel:{color:'#94a3b8',fontSize:10,width:180,overflow:'truncate'},axisLine:{lineStyle:{color:'#1e293b'}}},
+    yAxis:{type:'category',releases,axisLabel:{color:'#94a3b8',fontSize:10,width:180,overflow:'truncate'},axisLine:{lineStyle:{color:'#1e293b'}}},
     series:[
       {name:'Code Freeze',type:'scatter',data:freezeData,symbolSize:10,itemStyle:{color:'#f59e0b'}},
       {name:'Release',type:'scatter',releaseData,symbolSize:12,symbol:'diamond',itemStyle:{color:'#22c55e'}}
@@ -408,10 +408,10 @@ function renderMatrix(filter, search, monthFilter) {
       <div class="month-header" onclick="toggleMonth(this)">
         <span class="chevron">▼</span>
         <h3 style="color:${color}">${month}</h3>
-        <span class="count">${items.length} product${items.length>1?'s':''}</span>
+        <span class="count">${items.length} release${items.length>1?'s':''}</span>
       </div>
       <div class="month-content" style="max-height:2000px;opacity:1">
-        <table><thead><tr><th>Product</th><th>Version</th><th>PIC</th><th>Code Freeze</th><th>Release ETA</th><th>Status</th></tr></thead><tbody>`;
+        <table><thead><tr><th>Release</th><th>Version</th><th>PIC</th><th>Code Freeze</th><th>Release ETA</th><th>Status</th></tr></thead><tbody>`;
     items.forEach(d => {
       html += `<tr>
         <td class="product-name">${d.product}</td>
