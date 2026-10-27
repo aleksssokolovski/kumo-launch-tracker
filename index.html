@@ -7,408 +7,100 @@
 <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
-
   :root {
-    --nv-green: #76b900;
-    --nv-green-light: #8ed100;
-    --nv-green-glow: rgba(118, 185, 0, 0.3);
-    --bg-primary: #0a0e17;
-    --bg-secondary: #111827;
-    --bg-card: #1a2332;
-    --bg-card-hover: #1f2b3d;
-    --border: rgba(118, 185, 0, 0.15);
-    --border-hover: rgba(118, 185, 0, 0.4);
-    --text-primary: #f0f4f8;
-    --text-secondary: #94a3b8;
-    --text-muted: #64748b;
-    --accent-blue: #3b82f6;
-    --accent-purple: #a855f7;
-    --accent-orange: #f59e0b;
-    --accent-pink: #ec4899;
-    --accent-cyan: #06b6d4;
-    --positive: #22c55e;
-    --negative: #ef4444;
-    --warning: #f59e0b;
-    --info: #3b82f6;
+    --nv-green:#76b900;--nv-green-light:#8ed100;--nv-green-glow:rgba(118,185,0,0.3);
+    --bg-primary:#0a0e17;--bg-secondary:#111827;--bg-card:#1a2332;--bg-card-hover:#1f2b3d;
+    --border:rgba(118,185,0,0.15);--border-hover:rgba(118,185,0,0.4);
+    --text-primary:#f0f4f8;--text-secondary:#94a3b8;--text-muted:#64748b;
+    --accent-blue:#3b82f6;--accent-purple:#a855f7;--accent-orange:#f59e0b;--accent-pink:#ec4899;--accent-cyan:#06b6d4;
+    --positive:#22c55e;--negative:#ef4444;--warning:#f59e0b;
   }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg-primary);color:var(--text-primary);min-height:100vh;overflow-x:hidden}
+  body::before{content:'';position:fixed;inset:0;background:linear-gradient(rgba(118,185,0,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(118,185,0,0.03) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:0}
+  .container{max-width:1400px;margin:0 auto;padding:32px 24px;position:relative;z-index:1}
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+  /* Header */
+  .header{text-align:center;margin-bottom:40px;position:relative}
+  .header::after{content:'';position:absolute;bottom:-20px;left:50%;transform:translateX(-50%);width:120px;height:3px;background:linear-gradient(90deg,transparent,var(--nv-green),transparent);border-radius:2px}
+  .header .logo{margin-bottom:16px}
+  .header .logo img{height:80px;filter:drop-shadow(0 0 20px rgba(118,185,0,0.3))}
+  .header .badge{display:inline-block;padding:4px 14px;border-radius:20px;font-size:.7rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;background:rgba(118,185,0,0.12);color:var(--nv-green);border:1px solid rgba(118,185,0,0.25);margin-bottom:12px}
+  .header h1{font-size:2.2rem;font-weight:900;letter-spacing:-.5px;background:linear-gradient(135deg,var(--nv-green),var(--nv-green-light),#d4ff70);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+  .header .subtitle{color:var(--text-secondary);font-size:.9rem;margin-top:8px}
+  .header .timestamp{color:var(--text-muted);font-size:.8rem;margin-top:6px}
+  .glow-dot{width:8px;height:8px;background:var(--nv-green);border-radius:50%;box-shadow:0 0 8px var(--nv-green);display:inline-block;animation:pulse 2s ease-in-out infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
 
-  body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    background: var(--bg-primary);
-    color: var(--text-primary);
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
+  /* KPI Cards */
+  .kpi-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-bottom:32px}
+  @media(max-width:1100px){.kpi-grid{grid-template-columns:repeat(3,1fr)}}
+  @media(max-width:600px){.kpi-grid{grid-template-columns:repeat(2,1fr)}}
+  .kpi-card{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:20px;text-align:center;transition:all .25s ease;position:relative;overflow:hidden}
+  .kpi-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--card-accent,var(--nv-green));opacity:.7}
+  .kpi-card:hover{background:var(--bg-card-hover);border-color:var(--border-hover);transform:translateY(-2px);box-shadow:0 8px 30px rgba(0,0,0,.3),0 0 20px var(--nv-green-glow)}
+  .kpi-card .icon{font-size:1.5rem;margin-bottom:8px}
+  .kpi-card .value{font-size:2.2rem;font-weight:800;line-height:1.1;margin-bottom:4px}
+  .kpi-card .label{font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:var(--text-secondary)}
 
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background:
-      linear-gradient(rgba(118,185,0,0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(118,185,0,0.03) 1px, transparent 1px);
-    background-size: 60px 60px;
-    pointer-events: none;
-    z-index: 0;
-  }
+  /* Section */
+  .section{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:28px;margin-bottom:24px}
+  .section:hover{border-color:var(--border-hover)}
+  .section-header{display:flex;align-items:center;gap:10px;margin-bottom:20px;flex-wrap:wrap}
+  .section-header h2{font-size:1.15rem;font-weight:700}
+  .section-badge{padding:3px 10px;border-radius:10px;font-size:.65rem;font-weight:600;text-transform:uppercase;letter-spacing:.5px}
 
-  .container {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 32px 24px;
-    position: relative;
-    z-index: 1;
-  }
+  /* Charts grid */
+  .charts-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:24px}
+  @media(max-width:800px){.charts-grid{grid-template-columns:1fr}}
 
-  /* ── Header ── */
-  .header {
-    text-align: center;
-    margin-bottom: 40px;
-    position: relative;
-  }
-  .header::after {
-    content: '';
-    position: absolute;
-    bottom: -20px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 120px;
-    height: 3px;
-    background: linear-gradient(90deg, transparent, var(--nv-green), transparent);
-    border-radius: 2px;
-  }
-  .header .logo { margin-bottom: 16px; }
-  .header .logo img {
-    height: 80px;
-    filter: drop-shadow(0 0 20px rgba(118,185,0,0.3));
-  }
-  .header .badge {
-    display: inline-block;
-    padding: 4px 14px;
-    border-radius: 20px;
-    font-size: 0.7rem;
-    font-weight: 600;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    background: rgba(118,185,0,0.1);
-    color: var(--nv-green);
-    border: 1px solid rgba(118,185,0,0.2);
-    margin-bottom: 12px;
-  }
-  .header h1 {
-    font-size: 2.2rem;
-    font-weight: 900;
-    letter-spacing: -0.5px;
-    background: linear-gradient(135deg, var(--nv-green), var(--nv-green-light));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-  .header .subtitle {
-    color: var(--text-secondary);
-    font-size: 0.9rem;
-    margin-top: 8px;
-  }
-  .header .last-updated {
-    color: var(--text-muted);
-    font-size: 0.75rem;
-    margin-top: 6px;
-  }
+  /* Filters */
+  .filter-bar{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:24px;align-items:center}
+  .filter-btn{padding:6px 16px;border-radius:20px;font-size:.78rem;font-weight:600;letter-spacing:.3px;cursor:pointer;transition:all .2s;border:1px solid var(--border);background:var(--bg-card);color:var(--text-secondary)}
+  .filter-btn:hover{border-color:var(--border-hover);color:var(--text-primary)}
+  .filter-btn.active{background:rgba(118,185,0,0.15);border-color:var(--nv-green);color:var(--nv-green)}
+  .search-box{flex:1;min-width:200px;padding:8px 16px;border-radius:20px;border:1px solid var(--border);background:var(--bg-card);color:var(--text-primary);font-size:.82rem;font-family:inherit;outline:none;transition:border-color .2s}
+  .search-box:focus{border-color:var(--nv-green)}
+  .search-box::placeholder{color:var(--text-muted)}
 
-  /* ── KPI Cards ── */
-  .kpi-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-    margin-bottom: 32px;
-  }
-  @media (max-width: 900px) { .kpi-grid { grid-template-columns: repeat(2, 1fr); } }
-  @media (max-width: 500px) { .kpi-grid { grid-template-columns: 1fr; } }
-  .kpi-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 20px;
-    text-align: center;
-    transition: all 0.25s ease;
-    position: relative;
-    overflow: hidden;
-  }
-  .kpi-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 3px;
-    border-radius: 14px 14px 0 0;
-  }
-  .kpi-card:hover {
-    border-color: var(--border-hover);
-    box-shadow: 0 0 20px var(--nv-green-glow);
-    transform: translateY(-2px);
-  }
-  .kpi-card .icon { font-size: 1.5rem; margin-bottom: 8px; }
-  .kpi-card .value {
-    font-size: 2.4rem;
-    font-weight: 800;
-    line-height: 1.1;
-    margin-bottom: 4px;
-  }
-  .kpi-card .label {
-    font-size: 0.72rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-    color: var(--text-secondary);
-  }
+  /* Month group */
+  .month-group{margin-bottom:12px}
+  .month-header{display:flex;align-items:center;gap:10px;padding:10px 16px;background:rgba(118,185,0,0.06);border-radius:10px;margin-bottom:8px;cursor:pointer;transition:background .2s}
+  .month-header:hover{background:rgba(118,185,0,0.12)}
+  .month-header .chevron{transition:transform .3s;color:var(--nv-green);font-size:.8rem}
+  .month-header .chevron.collapsed{transform:rotate(-90deg)}
+  .month-header h3{font-size:.95rem;font-weight:700}
+  .month-header .count{margin-left:auto;font-size:.7rem;color:var(--text-muted);font-weight:600}
+  .month-content{overflow:hidden;transition:max-height .4s ease,opacity .3s ease}
+  .month-content.collapsed{max-height:0!important;opacity:0}
 
-  /* ── Filters ── */
-  .filter-bar {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 24px;
-    align-items: center;
-  }
-  .filter-btn {
-    padding: 6px 16px;
-    border-radius: 20px;
-    font-size: 0.78rem;
-    font-weight: 600;
-    letter-spacing: 0.3px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    border: 1px solid var(--border);
-    background: var(--bg-card);
-    color: var(--text-secondary);
-  }
-  .filter-btn:hover {
-    border-color: var(--border-hover);
-    color: var(--text-primary);
-  }
-  .filter-btn.active {
-    background: rgba(118,185,0,0.15);
-    border-color: var(--nv-green);
-    color: var(--nv-green);
-  }
+  /* Table */
+  table{width:100%;border-collapse:separate;border-spacing:0;font-size:.82rem}
+  th{padding:10px 14px;text-align:left;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--text-muted);background:rgba(118,185,0,0.04);border-bottom:1px solid var(--border);position:sticky;top:0}
+  td{padding:10px 14px;border-bottom:1px solid rgba(255,255,255,0.04);color:var(--text-secondary);vertical-align:middle}
+  tr:hover td{background:rgba(118,185,0,0.04)}
+  .product-name{font-weight:600;color:var(--text-primary)}
+  .pic-tag{display:inline-block;padding:2px 8px;border-radius:6px;font-size:.7rem;font-weight:500;background:rgba(118,185,0,0.08);color:var(--text-secondary);border:1px solid rgba(118,185,0,0.1)}
+  .version-tag{display:inline-block;padding:2px 8px;border-radius:6px;font-size:.7rem;font-weight:600;background:rgba(59,130,246,0.1);color:var(--accent-blue);border:1px solid rgba(59,130,246,0.15)}
 
-  /* ── Section ── */
-  .section {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 28px;
-    margin-bottom: 24px;
-    transition: border-color 0.3s;
-  }
-  .section:hover { border-color: var(--border-hover); }
-  .section-header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
-  }
-  .section-header h2 {
-    font-size: 1.15rem;
-    font-weight: 700;
-  }
-  .section-badge {
-    padding: 3px 10px;
-    border-radius: 10px;
-    font-size: 0.65rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
+  /* Status badges */
+  .status-badge{display:inline-flex;align-items:center;gap:5px;padding:4px 12px;border-radius:20px;font-size:.72rem;font-weight:600;white-space:nowrap}
+  .status-badge .dot{width:7px;height:7px;border-radius:50%;display:inline-block}
+  .status-complete{background:rgba(34,197,94,0.12);color:#22c55e}.status-complete .dot{background:#22c55e;box-shadow:0 0 6px rgba(34,197,94,0.5)}
+  .status-ontrack{background:rgba(59,130,246,0.12);color:#3b82f6}.status-ontrack .dot{background:#3b82f6;box-shadow:0 0 6px rgba(59,130,246,0.5)}
+  .status-atrisk{background:rgba(245,158,11,0.12);color:#f59e0b}.status-atrisk .dot{background:#f59e0b;box-shadow:0 0 6px rgba(245,158,11,0.5)}
+  .status-blocked{background:rgba(239,68,68,0.12);color:#ef4444}.status-blocked .dot{background:#ef4444;box-shadow:0 0 6px rgba(239,68,68,0.5)}
+  .status-notstarted{background:rgba(100,116,139,0.12);color:#64748b}.status-notstarted .dot{background:#64748b}
+  .status-na{background:rgba(100,116,139,0.08);color:#475569}.status-na .dot{background:#475569}
 
-  /* ── Month group ── */
-  .month-group {
-    margin-bottom: 12px;
-  }
-  .month-header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px 16px;
-    background: rgba(118,185,0,0.06);
-    border-radius: 10px;
-    margin-bottom: 8px;
-    cursor: pointer;
-    transition: background 0.2s;
-  }
-  .month-header:hover { background: rgba(118,185,0,0.12); }
-  .month-header .chevron {
-    transition: transform 0.3s;
-    color: var(--nv-green);
-    font-size: 0.8rem;
-  }
-  .month-header .chevron.collapsed { transform: rotate(-90deg); }
-  .month-header h3 {
-    font-size: 0.95rem;
-    font-weight: 700;
-    color: var(--nv-green);
-  }
-  .month-header .count {
-    margin-left: auto;
-    font-size: 0.7rem;
-    color: var(--text-muted);
-    font-weight: 600;
-  }
-  .month-content {
-    overflow: hidden;
-    transition: max-height 0.4s ease, opacity 0.3s ease;
-  }
-  .month-content.collapsed {
-    max-height: 0 !important;
-    opacity: 0;
-  }
+  .date-cell{font-variant-numeric:tabular-nums;font-size:.78rem}
+  .date-actual{color:var(--positive);font-weight:600}
+  .date-planned{color:var(--text-muted)}
 
-  /* ── Table ── */
-  table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
-    font-size: 0.82rem;
-  }
-  th {
-    padding: 10px 14px;
-    text-align: left;
-    font-size: 0.68rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-    color: var(--text-muted);
-    background: rgba(118,185,0,0.04);
-    border-bottom: 1px solid var(--border);
-    position: sticky;
-    top: 0;
-  }
-  td {
-    padding: 10px 14px;
-    border-bottom: 1px solid rgba(255,255,255,0.04);
-    color: var(--text-secondary);
-    vertical-align: middle;
-  }
-  tr:hover td { background: rgba(118,185,0,0.04); }
-  .product-name {
-    font-weight: 600;
-    color: var(--text-primary);
-  }
-  .pic-tag {
-    display: inline-block;
-    padding: 2px 8px;
-    border-radius: 6px;
-    font-size: 0.7rem;
-    font-weight: 500;
-    background: rgba(118,185,0,0.08);
-    color: var(--text-secondary);
-    border: 1px solid rgba(118,185,0,0.1);
-  }
-  .version-tag {
-    display: inline-block;
-    padding: 2px 8px;
-    border-radius: 6px;
-    font-size: 0.7rem;
-    font-weight: 600;
-    background: rgba(59,130,246,0.1);
-    color: var(--accent-blue);
-    border: 1px solid rgba(59,130,246,0.15);
-  }
-
-  /* ── Status badges ── */
-  .status-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 0.72rem;
-    font-weight: 600;
-    white-space: nowrap;
-  }
-  .status-badge .dot {
-    width: 7px; height: 7px;
-    border-radius: 50%;
-    display: inline-block;
-  }
-  .status-complete { background: rgba(34,197,94,0.12); color: #22c55e; }
-  .status-complete .dot { background: #22c55e; box-shadow: 0 0 6px rgba(34,197,94,0.5); }
-  .status-ontrack { background: rgba(59,130,246,0.12); color: #3b82f6; }
-  .status-ontrack .dot { background: #3b82f6; box-shadow: 0 0 6px rgba(59,130,246,0.5); }
-  .status-atrisk { background: rgba(245,158,11,0.12); color: #f59e0b; }
-  .status-atrisk .dot { background: #f59e0b; box-shadow: 0 0 6px rgba(245,158,11,0.5); }
-  .status-blocked { background: rgba(239,68,68,0.12); color: #ef4444; }
-  .status-blocked .dot { background: #ef4444; box-shadow: 0 0 6px rgba(239,68,68,0.5); }
-  .status-notstarted { background: rgba(100,116,139,0.12); color: #64748b; }
-  .status-notstarted .dot { background: #64748b; }
-  .status-na { background: rgba(100,116,139,0.08); color: #475569; }
-  .status-na .dot { background: #475569; }
-
-  .date-cell {
-    font-variant-numeric: tabular-nums;
-    font-size: 0.78rem;
-  }
-  .date-actual {
-    color: var(--positive);
-    font-weight: 600;
-  }
-  .date-planned {
-    color: var(--text-muted);
-  }
-
-  /* ── Charts row ── */
-  .charts-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
-    margin-bottom: 24px;
-  }
-  @media (max-width: 800px) { .charts-grid { grid-template-columns: 1fr; } }
-
-  /* ── Timeline ── */
-  .timeline-bar {
-    height: 6px;
-    border-radius: 3px;
-    background: rgba(255,255,255,0.06);
-    position: relative;
-    margin: 4px 0;
-  }
-  .timeline-bar .fill {
-    height: 100%;
-    border-radius: 3px;
-    position: absolute;
-    left: 0;
-    top: 0;
-    transition: width 0.5s ease;
-  }
-
-  /* ── Footer ── */
-  .footer {
-    text-align: center;
-    padding: 32px 0 16px;
-    color: var(--text-muted);
-    font-size: 0.72rem;
-    line-height: 1.8;
-  }
-  .footer a { color: var(--nv-green); text-decoration: none; }
-
-  /* ── Search ── */
-  .search-box {
-    flex: 1;
-    min-width: 200px;
-    padding: 8px 16px;
-    border-radius: 20px;
-    border: 1px solid var(--border);
-    background: var(--bg-card);
-    color: var(--text-primary);
-    font-size: 0.82rem;
-    font-family: inherit;
-    outline: none;
-    transition: border-color 0.2s;
-  }
-  .search-box:focus { border-color: var(--nv-green); }
-  .search-box::placeholder { color: var(--text-muted); }
+  /* Footer */
+  .footer{text-align:center;padding:32px 0 16px;color:var(--text-muted);font-size:.72rem;line-height:1.8}
+  .footer a{color:var(--nv-green);text-decoration:none}
+  .footer code{background:rgba(118,185,0,0.1);padding:2px 8px;border-radius:6px;color:var(--nv-green);font-size:.7rem}
 </style>
 </head>
 <body>
@@ -422,7 +114,7 @@
     <div class="badge">🚀 Product Launch Tracker</div>
     <h1>Kumo Products Launch Tracker</h1>
     <div class="subtitle">Tracking all Kumo product releases across the NVIDIA SW-GPU organization</div>
-    <div class="last-updated">Last updated: October 27, 2026 · Source: Launch Matrix (NEW)</div>
+    <div class="timestamp"><span class="glow-dot"></span>&nbsp; Last updated: <span id="lastUpdated">loading…</span> · 🔄 Data refreshed daily at 13:00 Europe (GMT+1) &amp; 13:00 PST</div>
   </div>
 
   <!-- KPI Cards -->
@@ -446,6 +138,15 @@
     </div>
   </div>
 
+  <!-- Release Timeline -->
+  <div class="section">
+    <div class="section-header">
+      <h2>📈 Release Timeline</h2>
+      <span class="section-badge" style="background:rgba(6,182,212,0.12);color:var(--accent-cyan)">Gantt View</span>
+    </div>
+    <div id="timelineChart" style="min-height:400px"></div>
+  </div>
+
   <!-- Filters + Search -->
   <div class="filter-bar">
     <input type="text" class="search-box" id="searchBox" placeholder="🔍 Search products, PICs, versions...">
@@ -459,76 +160,108 @@
   <!-- Launch Matrix Table -->
   <div id="matrixContainer"></div>
 
-  <!-- Footer -->
+  <!-- Raw Data Log -->
+  <div class="section">
+    <div class="section-header">
+      <h2>📋 Full Product Log</h2>
+      <span class="section-badge" style="background:rgba(118,185,0,0.12);color:var(--nv-green)">Raw Data</span>
+    </div>
+    <div style="overflow-x:auto">
+      <table id="logTable">
+        <thead><tr>
+          <th>Month</th><th>Product</th><th>Version</th><th>PIC</th>
+          <th>Freeze (Plan)</th><th>Freeze (Act)</th><th>Release (Plan)</th><th>Release (Act)</th><th>Status</th>
+        </tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+
   <div class="footer">
-    <p>Built by <strong>Aleksandar S. Sokolovski</strong> · Eng Ops, TPM and Security for Kumo Products · NVIDIA SW-GPU</p>
+    <p>Data collected by <code>extract_launch_data.py</code> · Updated daily at 13:00 Europe (GMT+1) &amp; 13:00 PST</p>
+    <p>NVIDIA SW-GPU · Author: Aleksandar S. Sokolovski</p>
     <p style="margin-top:4px">Source: <a href="https://nvidia-my.sharepoint.com/:x:/r/personal/hraghavan_nvidia_com/_layouts/15/doc2.aspx?sourcedoc=%7BBE0E9C14-7BAD-4F75-8932-DA226AA32C51%7D" target="_blank">Launch Matrix Spreadsheet</a></p>
   </div>
 
 </div>
 
 <script>
-const DATA = [
-  // August
-  { month: "August", product: "RFM NIM", version: "V2", pic: "Alex", freezePlanned: "2026-07-17", freezeActual: "2026-07-17", releasePlanned: "2026-08-24", releaseActual: "2026-09-10", status: "Complete" },
-  { month: "August", product: "Client for Foundation Models", version: "V1", pic: "Manush", freezePlanned: "2026-08-11", freezeActual: "", releasePlanned: "2026-08-24", releaseActual: "2026-09-08", status: "Complete" },
-  // September
-  { month: "September", product: "Kumo 3 Studio (EA)", version: "v3.1 EA", pic: "Joseph", freezePlanned: "2026-09-04", freezeActual: "", releasePlanned: "2026-09-18", releaseActual: "2026-09-16", status: "Complete" },
-  { month: "September", product: "Kumo 3 SDK", version: "v3.1 EA", pic: "Joseph", freezePlanned: "2026-09-04", freezeActual: "", releasePlanned: "2026-09-04", releaseActual: "2026-08-14", status: "Complete" },
-  { month: "September", product: "Kumo 3 Core + Snowflake", version: "v3.1 EA", pic: "Haowei", freezePlanned: "2026-09-04", freezeActual: "", releasePlanned: "2026-09-23", releaseActual: "", status: "Complete" },
-  { month: "September", product: "SDM", version: "v1", pic: "Aki", freezePlanned: "2026-08-20", freezeActual: "2026-08-31", releasePlanned: "2026-09-28", releaseActual: "", status: "On Track" },
-  // October
-  { month: "October", product: "Kumo 3 Source Code", version: "v3.1 GA", pic: "Min", freezePlanned: "2026-09-30", freezeActual: "2026-10-05", releasePlanned: "2026-10-16", releaseActual: "2026-10-18", status: "On Track" },
-  { month: "October", product: "Kumo 3 pip install", version: "v3.1 GA", pic: "Min", freezePlanned: "2026-09-30", freezeActual: "2026-10-05", releasePlanned: "2026-10-16", releaseActual: "2026-10-16", status: "On Track" },
-  { month: "October", product: "Kumo 3 on Snowflake ML", version: "v3.1 GA", pic: "Haowei", freezePlanned: "2026-09-30", freezeActual: "2026-10-05", releasePlanned: "2026-10-16", releaseActual: "2026-10-16", status: "On Track" },
-  { month: "October", product: "Docs / Website for Kumo 3", version: "v1.0 GA", pic: "Aleks S", freezePlanned: "2026-09-30", freezeActual: "2026-10-16", releasePlanned: "2026-10-16", releaseActual: "2026-10-17", status: "On Track" },
-  { month: "October", product: "Kumo Agent", version: "v1.0 GA", pic: "Adi", freezePlanned: "2026-10-07", freezeActual: "2026-10-05", releasePlanned: "2026-10-16", releaseActual: "2026-10-18", status: "On Track" },
-  { month: "October", product: "RFM Weights", version: "V2.1", pic: "Alex", freezePlanned: "2026-09-30", freezeActual: "2026-09-21", releasePlanned: "2026-09-28", releaseActual: "2026-09-28", status: "On Track" },
-  { month: "October", product: "RFM NIM", version: "V2.1", pic: "Alex", freezePlanned: "2026-09-30", freezeActual: "2026-09-30", releasePlanned: "2026-10-13", releaseActual: "", status: "On Track" },
-  { month: "October", product: "Client for Foundation Models", version: "PQL for RFM & TFM", pic: "Manush", freezePlanned: "2026-09-14", freezeActual: "", releasePlanned: "2026-10-09", releaseActual: "2026-10-19", status: "On Track" },
-  { month: "October", product: "TFM Model", version: "v1", pic: "Aleks S", freezePlanned: "2026-09-15", freezeActual: "2026-09-15", releasePlanned: "", releaseActual: "", status: "On Track" },
-  { month: "October", product: "TFM Weights", version: "v1", pic: "Aleks S", freezePlanned: "2026-09-15", freezeActual: "2026-09-15", releasePlanned: "2026-09-29", releaseActual: "", status: "On Track" },
-  { month: "October", product: "TFM Container (NIM)", version: "v1", pic: "Aleks S", freezePlanned: "2026-09-15", freezeActual: "2026-09-17", releasePlanned: "2026-10-13", releaseActual: "", status: "On Track" },
-  { month: "October", product: "Docs / Website for TFM", version: "", pic: "Aleks S", freezePlanned: "2026-09-29", freezeActual: "", releasePlanned: "2026-10-13", releaseActual: "", status: "On Track" },
-  { month: "October", product: "Forecasting Weights", version: "v1", pic: "Aditi", freezePlanned: "2026-09-01", freezeActual: "", releasePlanned: "", releaseActual: "", status: "" },
-  { month: "October", product: "Forecasting Container", version: "v1", pic: "Aditi", freezePlanned: "2026-09-01", freezeActual: "", releasePlanned: "", releaseActual: "", status: "" },
-  { month: "October", product: "Anomaly Weights", version: "v1", pic: "Aditi", freezePlanned: "2026-09-01", freezeActual: "", releasePlanned: "", releaseActual: "", status: "" },
-  { month: "October", product: "Anomaly Container", version: "v1", pic: "Aditi", freezePlanned: "2026-09-01", freezeActual: "", releasePlanned: "", releaseActual: "", status: "" },
-  // December
-  { month: "December", product: "Kumo 3 Studio (GA)", version: "v3.1 GA", pic: "Joseph", freezePlanned: "2026-09-30", freezeActual: "", releasePlanned: "2026-10-16", releaseActual: "", status: "On Track" },
-  { month: "December", product: "Kumo 3 on DBx MLFlow", version: "v3.1 GA", pic: "Haowei", freezePlanned: "2026-09-18", freezeActual: "", releasePlanned: "2026-09-23", releaseActual: "", status: "On Track" },
-  { month: "December", product: "Kumo 3 on Cloudera", version: "v3.1 GA", pic: "Haowei", freezePlanned: "2026-09-18", freezeActual: "", releasePlanned: "2026-09-23", releaseActual: "", status: "On Track" },
-  { month: "December", product: "OpenSourcing PQL", version: "v1", pic: "Jana / Manush", freezePlanned: "2026-12-25", freezeActual: "", releasePlanned: "2027-01-22", releaseActual: "", status: "On Track" },
-  { month: "December", product: "DataScience Skills for Agents", version: "v1", pic: "Myunghwan", freezePlanned: "2026-10-13", freezeActual: "", releasePlanned: "2026-10-16", releaseActual: "", status: "" },
-  { month: "December", product: "Fraud Blue Print", version: "v2", pic: "Joe E", freezePlanned: "", freezeActual: "", releasePlanned: "", releaseActual: "", status: "" },
-  // January
-  { month: "January", product: "RFM Model", version: "V2.5", pic: "Matthias", freezePlanned: "2026-12-18", freezeActual: "", releasePlanned: "", releaseActual: "", status: "" },
-  { month: "January", product: "RFM Weights", version: "V2.5", pic: "Adi", freezePlanned: "2026-12-25", freezeActual: "", releasePlanned: "2027-01-22", releaseActual: "", status: "On Track" },
-  { month: "January", product: "RFM Container", version: "V2.5", pic: "Alex", freezePlanned: "2026-12-25", freezeActual: "", releasePlanned: "2027-01-22", releaseActual: "", status: "Not Started" },
-  { month: "January", product: "Client for Foundation Models", version: "V2/3", pic: "Jana", freezePlanned: "2026-12-25", freezeActual: "", releasePlanned: "2027-01-22", releaseActual: "", status: "" },
-  { month: "January", product: "SDM v2", version: "v2", pic: "Aki/Ramona/Matthias", freezePlanned: "2026-10-06", freezeActual: "2026-10-06", releasePlanned: "2026-10-14", releaseActual: "2026-10-14", status: "On Track" },
-  { month: "January", product: "SDM v3", version: "v3", pic: "Aki/Ramona/Matthias", freezePlanned: "2026-10-28", freezeActual: "", releasePlanned: "2026-11-02", releaseActual: "", status: "On Track" },
-  { month: "January", product: "SDM v4", version: "v4", pic: "Aki/Ramona/Matthias", freezePlanned: "2026-11-25", freezeActual: "", releasePlanned: "2026-12-01", releaseActual: "", status: "On Track" },
-  { month: "January", product: "Kumo 3.5 Core", version: "V3.5", pic: "Joseph", freezePlanned: "2026-12-25", freezeActual: "", releasePlanned: "", releaseActual: "", status: "Not Started" },
-  // February
-  { month: "February", product: "Forecasting Model", version: "v2", pic: "Aditi", freezePlanned: "", freezeActual: "", releasePlanned: "", releaseActual: "", status: "" },
-  // March+
-  { month: "March+", product: "Tabular Language Predictor (TLP)", version: "v1", pic: "Vid", freezePlanned: "", freezeActual: "", releasePlanned: "", releaseActual: "", status: "" },
-  { month: "March+", product: "RecSys Blue Print", version: "v1", pic: "Vid", freezePlanned: "", freezeActual: "", releasePlanned: "", releaseActual: "", status: "" },
-  { month: "March+", product: "Predictive Maintenance Blue Print", version: "v1", pic: "Josh", freezePlanned: "", freezeActual: "", releasePlanned: "", releaseActual: "", status: "" },
-  { month: "March+", product: "Anomaly Model v2", version: "v2", pic: "Aditi", freezePlanned: "", freezeActual: "", releasePlanned: "", releaseActual: "", status: "" },
-];
+// ── CSV_RAW injected by extract_launch_data.py ──
+const CSV_RAW = `month,product,version,pic,freeze_planned,freeze_actual,release_planned,release_actual,status
+August,RFM Weights,V2,Won't do HF (per PM),,,,,
+August,RFM NIM,V2,Alex,2026-07-17,2026-07-17,2026-08-24,2026-09-10,Complete
+August,Client for Foundation Models,V1,Manush,2026-08-11,,2026-08-24,2026-09-08,Complete
+September,Kumo 3 Studio - EA only,v3.1 - EA,Joseph,2026-09-04,,2026-09-18,2026-09-16,Complete
+September,Kumo 3 SDK (for both pip install and container),v3.1 - EA,Joseph,2026-09-04,,2026-09-04,2026-08-14,Complete
+September,Kumo 3 Core + Snowflake pip install,v3.1 - EA,Haowei,2026-09-04,,2026-09-23,,Complete
+September,SDM,v1,Aki,2026-08-20,2026-08-31,2026-09-28,,On Track
+October,Kumo 3 Source Code,v3.1 - GA,Min,2026-09-30,2026-10-05,2026-10-16,2026-10-18,On Track
+October,Kumo 3 standalone pip install,v3.1 - GA,Min,2026-09-30,2026-10-05,2026-10-16,2026-10-16,On Track
+October,Kumo 3 on Snowflake ML,v3.1 - GA,Haowei,2026-09-30,2026-10-05,2026-10-16,2026-10-16,On Track
+October,Documentation / Website / Artifacts for Kumo 3,v 1.0 GA,Aleks S,2026-09-30,2026-10-16,2026-10-16,2026-10-17,On Track
+October,Kumo Agent,v 1.0 GA,Adi,2026-10-07,2026-10-05,2026-10-16,2026-10-18,On Track
+October,RFM Model Implementation,V2.1,Vid,2026-09-21,2026-09-21,,,
+October,RFM Weights,V2.1,Alex,2026-09-30,2026-09-21,2026-09-28,2026-09-28,On Track
+October,RFM Weights - Databricks (removed Snowflake),V2.1,Adi,2026-09-30,2026-09-21,2026-10-05,,N/A
+October,RFM NIM,V2.1,Alex,2026-09-30,2026-09-30,2026-10-13,,On Track
+October,Client for Foundation Models,Pql support for RFM & TFM,Manush,2026-09-14,,2026-10-09,2026-10-19,On Track
+October,Kumo Agent,Skills to work with sdm-client,Adi,2026-10-07,,2026-10-09,,On Track
+October,TFM Model implementation,v1,Aleks S,2026-09-15,2026-09-15,,,On Track
+October,TFM Weights,v1,Aleks S,2026-09-15,2026-09-15,2026-09-29,,On Track
+October,TFM Wheel/partner packaging (Snowflake/Databricks),v1 (Stretch),Adi,,,,,
+October,TFM Container (NIM),v1,Aleks S,2026-09-15,2026-09-17,2026-10-13,,On Track
+October,TFM Training Data/Recipe,v1,Aleks S,2026-09-29,,,,On Track
+October,Documentation / Website / Artifacts for TFM,,Aleks S,2026-09-29,,2026-10-13,,On Track
+October,Forecasting Weights,v1,Aditi,2026-09-01,,,,
+October,Forecasting Container,v1,Aditi,2026-09-01,,,,
+October,Anomaly Weights,v1,Aditi,2026-09-01,,,,
+October,Anomaly,v1,Aditi,2026-09-01,,,,
+December,Kumo 3 Studio - GA,v3.1 - GA,Joseph,2026-09-30,,2026-10-16,,On Track
+December,Kumo 3 on DBx MLFlow,v3.1 - GA,Haowei,2026-09-18,,2026-09-23,,On Track
+December,Kumo 3 on Cloudera,v3.1 - GA,Haowei,2026-09-18,,2026-09-23,,On Track
+December,OpenSourcing PQL as standalone sub repo,v1,Jana / Manush,2026-12-25,,2027-01-22,,On Track
+December,DataScience Skills for NLP Agents,v1,Myunghwan,2026-10-13,,2026-10-16,,
+December,Fraud Blue Print v2,v2,Joe E,,,,,
+January,RFM Model Implementation,V2.5,Matthias,2026-12-18,,,,
+January,RFM Weights,V2.5,Adi,2026-12-25,,2027-01-22,,On Track
+January,RFM Weights (Snowflake/Databricks),V2.5,Adi,2027-01-01,,2027-01-29,,On Track
+January,RFM Container,V2.5,Alex,2026-12-25,,2027-01-22,,Not Started
+January,RFM Training Data/Recipe,v2.5,Matthias,2026-12-25,,2027-01-22,,On Track
+January,Client for Foundation Models,V2/3,Jana,2026-12-25,,2027-01-22,,
+January,SDM,v2,Aki/Ramona/Matthias,2026-10-06,2026-10-06,2026-10-14,2026-10-14,On Track
+January,SDM,v3,Aki/Ramona/Matthias,2026-10-28,,2026-11-02,,On Track
+January,SDM,v4,Aki/Ramona/Matthias,2026-11-25,,2026-12-01,,On Track
+January,Kumo 3.5 core,V3.5,Joseph,2026-12-25,,,,Not Started
+February,Forecasting Model,v2,Aditi,,,,,
+March+,Tabular Language Predictor (TLPs),v1,Vid,,,,,
+March+,RecSys Blue Print (based on Walmart lessoms),v1,Vid,,,,,
+March+,Predictive Maintenance Blue Print,v1,Josh,,,,,
+March+,Anomaly Model,v2,Aditi,,,,,`;
 
-const MONTH_ORDER = ["August", "September", "October", "December", "January", "February", "March+"];
+const MONTH_ORDER = ["August","September","October","December","January","February","March+"];
 const MONTH_COLORS = {
-  "August": "#6366f1",
-  "September": "#a855f7",
-  "October": "#f59e0b",
-  "December": "#3b82f6",
-  "January": "#06b6d4",
-  "February": "#ec4899",
-  "March+": "#64748b"
+  "August":"#6366f1","September":"#a855f7","October":"#f59e0b",
+  "December":"#3b82f6","January":"#06b6d4","February":"#ec4899","March+":"#64748b"
 };
+
+function parseCSV(raw) {
+  const lines = raw.trim().split('\n');
+  const headers = lines[0].split(',');
+  return lines.slice(1).map(line => {
+    // Handle commas inside quotes
+    const vals = [];
+    let current = '', inQuote = false;
+    for (const ch of line) {
+      if (ch === '"') { inQuote = !inQuote; continue; }
+      if (ch === ',' && !inQuote) { vals.push(current); current = ''; continue; }
+      current += ch;
+    }
+    vals.push(current);
+    const obj = {};
+    headers.forEach((h, i) => obj[h.trim()] = (vals[i] || '').trim());
+    return obj;
+  });
+}
 
 function normalizeStatus(s) {
   if (!s) return "N/A";
@@ -538,27 +271,14 @@ function normalizeStatus(s) {
   if (l.includes("risk")) return "At Risk";
   if (l.includes("block")) return "Blocked";
   if (l === "not started") return "Not Started";
-  if (l === "n/a" || l === "") return "N/A";
-  return s;
+  if (l === "n/a") return "N/A";
+  return "N/A";
 }
 
 function statusBadge(raw) {
   const s = normalizeStatus(raw);
-  const map = {
-    "Complete": "status-complete",
-    "On Track": "status-ontrack",
-    "At Risk": "status-atrisk",
-    "Blocked": "status-blocked",
-    "Not Started": "status-notstarted",
-    "N/A": "status-na",
-  };
-  const cls = map[s] || "status-na";
+  const cls = {"Complete":"status-complete","On Track":"status-ontrack","At Risk":"status-atrisk","Blocked":"status-blocked","Not Started":"status-notstarted","N/A":"status-na"}[s]||"status-na";
   return `<span class="status-badge ${cls}"><span class="dot"></span>${s}</span>`;
-}
-
-function fmtDate(d) {
-  if (!d) return '<span class="date-cell date-planned">—</span>';
-  return `<span class="date-cell">${d}</span>`;
 }
 
 function fmtDatePair(planned, actual) {
@@ -567,167 +287,135 @@ function fmtDatePair(planned, actual) {
   return '<span class="date-cell date-planned">TBD</span>';
 }
 
-// ── Render KPIs ──
+let DATA = [];
+
 function renderKPIs() {
   const total = DATA.length;
   const complete = DATA.filter(d => normalizeStatus(d.status) === "Complete").length;
   const onTrack = DATA.filter(d => normalizeStatus(d.status) === "On Track").length;
-  const upcoming = DATA.filter(d => {
-    const s = normalizeStatus(d.status);
-    return s !== "Complete" && s !== "N/A";
-  }).length;
+  const notStarted = DATA.filter(d => normalizeStatus(d.status) === "Not Started").length;
+  const upcoming = DATA.filter(d => { const s = normalizeStatus(d.status); return s !== "Complete" && s !== "N/A"; }).length;
 
   const cards = [
-    { icon: "📦", value: total, label: "Total Products", color: "#76b900" },
-    { icon: "✅", value: complete, label: "Completed", color: "#22c55e" },
-    { icon: "🔵", value: onTrack, label: "On Track", color: "#3b82f6" },
-    { icon: "🚀", value: upcoming, label: "In Pipeline", color: "#f59e0b" },
+    {icon:"📦",value:total,label:"Total Products",color:"#76b900"},
+    {icon:"✅",value:complete,label:"Completed",color:"#22c55e"},
+    {icon:"🔵",value:onTrack,label:"On Track",color:"#3b82f6"},
+    {icon:"🚀",value:upcoming,label:"In Pipeline",color:"#f59e0b"},
+    {icon:"⚪",value:notStarted,label:"Not Started",color:"#64748b"},
   ];
-
   document.getElementById('kpiCards').innerHTML = cards.map(c =>
-    `<div class="kpi-card" style="border-top: 3px solid ${c.color}">
-      <div class="icon">${c.icon}</div>
-      <div class="value" style="color:${c.color}">${c.value}</div>
-      <div class="label">${c.label}</div>
-    </div>`
+    `<div class="kpi-card" style="--card-accent:${c.color}"><div class="icon">${c.icon}</div><div class="value" style="color:${c.color}">${c.value}</div><div class="label">${c.label}</div></div>`
   ).join('');
 }
 
-// ── Render Charts ──
 function renderCharts() {
-  // Status pie chart
+  // Status pie
   const statusCounts = {};
-  DATA.forEach(d => {
-    const s = normalizeStatus(d.status);
-    statusCounts[s] = (statusCounts[s] || 0) + 1;
-  });
-  const statusColors = {
-    "Complete": "#22c55e",
-    "On Track": "#3b82f6",
-    "At Risk": "#f59e0b",
-    "Blocked": "#ef4444",
-    "Not Started": "#64748b",
-    "N/A": "#334155"
-  };
+  DATA.forEach(d => { const s = normalizeStatus(d.status); statusCounts[s] = (statusCounts[s]||0)+1; });
+  const statusColors = {"Complete":"#22c55e","On Track":"#3b82f6","At Risk":"#f59e0b","Blocked":"#ef4444","Not Started":"#64748b","N/A":"#334155"};
 
-  const pieChart = echarts.init(document.getElementById('statusChart'));
-  pieChart.setOption({
-    backgroundColor: 'transparent',
-    tooltip: { trigger: 'item', formatter: '{b}: {c} ({d}%)' },
-    series: [{
-      type: 'pie',
-      radius: ['45%', '75%'],
-      center: ['50%', '50%'],
-      itemStyle: { borderRadius: 6, borderColor: '#1a2332', borderWidth: 3 },
-      label: { color: '#94a3b8', fontSize: 11, formatter: '{b}\n{c}' },
-       },
-       Object.entries(statusCounts).map(([name, value]) => ({
-        name, value,
-        itemStyle: { color: statusColors[name] || '#64748b' }
-      }))
+  const pie = echarts.init(document.getElementById('statusChart'));
+  pie.setOption({
+    backgroundColor:'transparent',
+    tooltip:{trigger:'item',formatter:'{b}: {c} ({d}%)'},
+    series:[{
+      type:'pie',radius:['45%','75%'],center:['50%','50%'],
+      itemStyle:{borderRadius:6,borderColor:'#1a2332',borderWidth:3},
+      label:{color:'#94a3b8',fontSize:11,formatter:'{b}\n{c}'},
+      data:Object.entries(statusCounts).map(([name,value])=>({name,value,itemStyle:{color:statusColors[name]||'#64748b'}}))
     }]
   });
 
-  // Monthly bar chart
+  // Monthly bar
   const monthCounts = {};
   MONTH_ORDER.forEach(m => monthCounts[m] = 0);
-  DATA.forEach(d => { if (monthCounts[d.month] !== undefined) monthCounts[d.month]++; });
+  DATA.forEach(d => { if(monthCounts[d.month] !== undefined) monthCounts[d.month]++; });
 
-  const barChart = echarts.init(document.getElementById('monthChart'));
-  barChart.setOption({
-    backgroundColor: 'transparent',
-    tooltip: { trigger: 'axis' },
-    grid: { left: 50, right: 20, top: 20, bottom: 40 },
-    xAxis: {
-      type: 'category',
-      data: MONTH_ORDER,
-      axisLabel: { color: '#64748b', fontSize: 11 },
-      axisLine: { lineStyle: { color: '#1e293b' } }
-    },
-    yAxis: {
-      type: 'value',
-      axisLabel: { color: '#64748b' },
-      splitLine: { lineStyle: { color: 'rgba(255,255,255,0.04)' } }
-    },
-    series: [{
-      type: 'bar',
-      data: MONTH_ORDER.map(m => ({
-        value: monthCounts[m],
-        itemStyle: { color: MONTH_COLORS[m], borderRadius: [6, 6, 0, 0] }
-      })),
-      barMaxWidth: 40,
-      emphasis: {
-        itemStyle: { shadowBlur: 10, shadowColor: 'rgba(118,185,0,0.3)' }
-      }
+  const bar = echarts.init(document.getElementById('monthChart'));
+  bar.setOption({
+    backgroundColor:'transparent',
+    tooltip:{trigger:'axis'},
+    grid:{left:50,right:20,top:20,bottom:40},
+    xAxis:{type:'category',data:MONTH_ORDER,axisLabel:{color:'#64748b',fontSize:11},axisLine:{lineStyle:{color:'#1e293b'}}},
+    yAxis:{type:'value',axisLabel:{color:'#64748b'},splitLine:{lineStyle:{color:'rgba(255,255,255,0.04)'}}},
+    series:[{
+      type:'bar',barMaxWidth:40,
+      data:MONTH_ORDER.map(m=>({value:monthCounts[m],itemStyle:{color:MONTH_COLORS[m],borderRadius:[6,6,0,0]}})),
+      emphasis:{itemStyle:{shadowBlur:10,shadowColor:'rgba(118,185,0,0.3)'}}
     }]
   });
 
-  window.addEventListener('resize', () => { pieChart.resize(); barChart.resize(); });
+  // Timeline scatter — products with freeze/release dates
+  const withDates = DATA.filter(d => d.freeze_planned || d.release_planned);
+  const products = withDates.map(d => d.product.substring(0, 30));
+  const freezeData = withDates.map((d, i) => d.freeze_planned ? [d.freeze_planned, i] : null).filter(Boolean);
+  const releaseData = withDates.map((d, i) => (d.release_actual || d.release_planned) ? [(d.release_actual || d.release_planned), i] : null).filter(Boolean);
+
+  const timeline = echarts.init(document.getElementById('timelineChart'));
+  timeline.setOption({
+    backgroundColor:'transparent',
+    tooltip:{trigger:'item',formatter:p => `${products[p.value[1]]}<br/>${p.seriesName}: ${p.value[0]}`},
+    legend:{bottom:0,textStyle:{color:'#94a3b8',fontSize:11}},
+    grid:{left:200,right:30,top:20,bottom:50},
+    xAxis:{type:'time',axisLabel:{color:'#64748b'},axisLine:{lineStyle:{color:'#1e293b'}},splitLine:{lineStyle:{color:'rgba(255,255,255,0.04)'}}},
+    yAxis:{type:'category',products,axisLabel:{color:'#94a3b8',fontSize:10,width:180,overflow:'truncate'},axisLine:{lineStyle:{color:'#1e293b'}}},
+    series:[
+      {name:'Code Freeze',type:'scatter',data:freezeData,symbolSize:10,itemStyle:{color:'#f59e0b'}},
+      {name:'Release',type:'scatter',releaseData,symbolSize:12,symbol:'diamond',itemStyle:{color:'#22c55e'}}
+    ]
+  });
+
+  window.addEventListener('resize',()=>{pie.resize();bar.resize();timeline.resize()});
 }
 
-// ── Render Matrix ──
 function renderMatrix(filter, search) {
   const container = document.getElementById('matrixContainer');
   let html = '';
-
   MONTH_ORDER.forEach(month => {
     let items = DATA.filter(d => d.month === month);
-    if (filter && filter !== 'all') {
-      items = items.filter(d => normalizeStatus(d.status) === filter);
-    }
+    if (filter && filter !== 'all') items = items.filter(d => normalizeStatus(d.status) === filter);
     if (search) {
       const q = search.toLowerCase();
-      items = items.filter(d =>
-        d.product.toLowerCase().includes(q) ||
-        d.pic.toLowerCase().includes(q) ||
-        d.version.toLowerCase().includes(q) ||
-        d.month.toLowerCase().includes(q)
-      );
+      items = items.filter(d => d.product.toLowerCase().includes(q) || d.pic.toLowerCase().includes(q) || d.version.toLowerCase().includes(q) || d.month.toLowerCase().includes(q));
     }
-    if (items.length === 0) return;
-
-    const color = MONTH_COLORS[month] || '#64748b';
+    if (!items.length) return;
+    const color = MONTH_COLORS[month]||'#64748b';
     html += `<div class="section month-group">
       <div class="month-header" onclick="toggleMonth(this)">
         <span class="chevron">▼</span>
         <h3 style="color:${color}">${month}</h3>
-        <span class="count">${items.length} product${items.length > 1 ? 's' : ''}</span>
+        <span class="count">${items.length} product${items.length>1?'s':''}</span>
       </div>
       <div class="month-content" style="max-height:2000px;opacity:1">
-        <table>
-          <thead><tr>
-            <th>Product</th>
-            <th>Version</th>
-            <th>PIC</th>
-            <th>Code Freeze</th>
-            <th>Release ETA</th>
-            <th>Status</th>
-          </tr></thead>
-          <tbody>`;
+        <table><thead><tr><th>Product</th><th>Version</th><th>PIC</th><th>Code Freeze</th><th>Release ETA</th><th>Status</th></tr></thead><tbody>`;
     items.forEach(d => {
       html += `<tr>
         <td class="product-name">${d.product}</td>
         <td>${d.version ? `<span class="version-tag">${d.version}</span>` : '—'}</td>
         <td><span class="pic-tag">${d.pic}</span></td>
-        <td>${fmtDatePair(d.freezePlanned, d.freezeActual)}</td>
-        <td>${fmtDatePair(d.releasePlanned, d.releaseActual)}</td>
+        <td>${fmtDatePair(d.freeze_planned, d.freeze_actual)}</td>
+        <td>${fmtDatePair(d.release_planned, d.release_actual)}</td>
         <td>${statusBadge(d.status)}</td>
       </tr>`;
     });
     html += `</tbody></table></div></div>`;
   });
-
   container.innerHTML = html;
 }
 
-function toggleMonth(el) {
-  const content = el.nextElementSibling;
-  const chevron = el.querySelector('.chevron');
-  content.classList.toggle('collapsed');
-  chevron.classList.toggle('collapsed');
+function renderLog() {
+  const tbody = document.querySelector('#logTable tbody');
+  tbody.innerHTML = DATA.map(d =>
+    `<tr><td>${d.month}</td><td class="product-name">${d.product}</td><td>${d.version?`<span class="version-tag">${d.version}</span>`:'—'}</td><td><span class="pic-tag">${d.pic}</span></td><td class="date-cell">${d.freeze_planned||'—'}</td><td class="date-cell date-actual">${d.freeze_actual||'—'}</td><td class="date-cell">${d.release_planned||'—'}</td><td class="date-cell date-actual">${d.release_actual||'—'}</td><td>${statusBadge(d.status)}</td></tr>`
+  ).join('');
 }
 
-// ── Filters ──
+function toggleMonth(el) {
+  el.nextElementSibling.classList.toggle('collapsed');
+  el.querySelector('.chevron').classList.toggle('collapsed');
+}
+
+// Filters
 let activeFilter = 'all';
 document.querySelectorAll('.filter-btn').forEach(btn => {
   btn.addEventListener('click', () => {
@@ -737,15 +425,15 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
     renderMatrix(activeFilter, document.getElementById('searchBox').value);
   });
 });
+document.getElementById('searchBox').addEventListener('input', e => renderMatrix(activeFilter, e.target.value));
 
-document.getElementById('searchBox').addEventListener('input', e => {
-  renderMatrix(activeFilter, e.target.value);
-});
-
-// ── Init ──
+// Init
+DATA = parseCSV(CSV_RAW);
+document.getElementById('lastUpdated').textContent = new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
 renderKPIs();
 renderCharts();
-renderMatrix('all', '');
+renderMatrix('all','');
+renderLog();
 </script>
 </body>
 </html>
