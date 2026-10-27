@@ -1,22 +1,21 @@
 month,product,version,pic,freeze_planned,freeze_actual,release_planned,release_actual,status
 August,RFM Weights,V2,Won't do HF (per PM),,,,,
 August,RFM NIM,V2,Alex,2026-07-17,2026-07-17,2026-08-24,2026-09-10,Complete
-August,Client for Foundation Models,V1,Manush,2026-08-11,,2026-08-24,2026-09-08,Complete
-September,Kumo 3 Studio - EA only,v3.1 - EA,Joseph,2026-09-04,,2026-09-18,2026-09-16,Complete
-September,Kumo 3 SDK (for both pip install and container),v3.1 - EA,Joseph,2026-09-04,,2026-09-04,2026-08-14,Complete
-September,Kumo 3 Core + Snowflake pip install,v3.1 - EA,Haowei,2026-09-04,,2026-09-23,,Complete
+August,Client for Foundation Models,V1 (pql support for RFM v2.x only),Manush,2026-08-11,,2026-08-24,2026-09-08,Complete
+September,Kumo 3 Studio - EA only (inc UI/Temporal etc),"v3.1 - EA  EA for NPCI, Santander, Paypal.",Joseph,2026-09-04,,2026-09-18,2026-09-16,Complete
+September,Kumo 3 SDK (for both pip install and container),"v3.1 - EA  EA for NPCI, Santander, Paypal.",Joseph,2026-09-04,,2026-09-04,2026-08-14,Complete
+September,Kumo 3 Core + Snowflake pip install,v3.1 - EA  EA for Akhil at Snowflake,Haowei,2026-09-04,,2026-09-23,,Complete
 September,SDM,v1,Aki,2026-08-20,2026-08-31,2026-09-28,,On Track
-October,Kumo 3 Source Code,v3.1 - GA,Min,2026-09-30,2026-10-05,2026-10-16,2026-10-18,On Track
+October,Kumo 3 Source Code  (for core pip install),v3.1 - GA,Min,2026-09-30,2026-10-05,2026-10-16,2026-10-18,On Track
 October,Kumo 3 standalone pip install,v3.1 - GA,Min,2026-09-30,2026-10-05,2026-10-16,2026-10-16,On Track
 October,Kumo 3 on Snowflake ML,v3.1 - GA,Haowei,2026-09-30,2026-10-05,2026-10-16,2026-10-16,On Track
 October,Documentation / Website / Artifacts for Kumo 3,v 1.0 GA,Aleks S,2026-09-30,2026-10-16,2026-10-16,2026-10-17,On Track
 October,Kumo Agent,v 1.0 GA,Adi,2026-10-07,2026-10-05,2026-10-16,2026-10-18,On Track
-October,RFM Model Implementation,V2.1,Vid,2026-09-21,2026-09-21,,,
+October,RFM Model Implementation,V2.1 (no kaggle + SDM base),Vid,2026-09-21,2026-09-21,,,
 October,RFM Weights,V2.1,Alex,2026-09-30,2026-09-21,2026-09-28,2026-09-28,On Track
 October,RFM Weights - Databricks (removed Snowflake),V2.1,Adi,2026-09-30,2026-09-21,2026-10-05,,N/A
 October,RFM NIM,V2.1,Alex,2026-09-30,2026-09-30,2026-10-13,,On Track
-October,RFM Training Data/Recipe,v2.1,"Won't do (per PM)
-Will publish with 2.5 once we do not have ICL dependency",,,,,
+October,RFM Training Data/Recipe,v2.1,Won't do (per PM) Will publish with 2.5 once we do not have ICL dependency,,,,,
 October,Client for Foundation Models,Pql support for RFM & TFM,Manush,2026-09-14,,2026-10-09,2026-10-19,On Track
 October,Kumo Agent,Skills to work with sdm-client,Adi,2026-10-07,,2026-10-09,,On Track
 October,TFM Model implementation,v1,Aleks S,2026-09-15,2026-09-15,,,On Track
@@ -25,32 +24,30 @@ October,TFM Wheel/partner packaging (Snowflake/Databricks),v1 (Stretch),Adi,,,,,
 October,TFM Container (NIM),v1,Aleks S,2026-09-15,2026-09-17,2026-10-13,,On Track
 October,TFM Training Data/Recipe,v1,Aleks S,2026-09-29,,,,On Track
 October,Documentation / Website / Artifacts for TFM,,Aleks S,2026-09-29,,2026-10-13,,On Track
-October,Forecasting Weights,v1,Aditi,2026-09-01,,,,
+October,Forecasting Weights,v1 (Existing Tesseract Model rebranded),Aditi,2026-09-01,,,,
 October,Forecasting Container,v1,Aditi,2026-09-01,,,,
-October,Forecasting Training Data/Recipe,v1,"We may not do?
-Confirm with Matthias/Aditi/Saira",,,,,
-October,Anomaly Weights,v1,Aditi,2026-09-01,,,,
+October,Forecasting Training Data/Recipe,v1,We may not do? Confirm with Matthias/Aditi/Saira,,,,,
+October,Anomaly Weights,v1 (Existing Tesseract Model rebranded),Aditi,2026-09-01,,,,
 October,Anomaly,v1,Aditi,2026-09-01,,,,
-October,Anomaly Training Data/Recipe,v1,"We may not do?
-Confirm with Matthias/Aditi/Saira",2026-09-01,,,,
-December,Kumo 3 Studio - GA,v3.1 - GA,Joseph,2026-09-30,,2026-10-16,,On Track
+October,Anomaly Training Data/Recipe,v1,We may not do? Confirm with Matthias/Aditi/Saira,2026-09-01,,,,
+December,Kumo 3 Studio - GA (inc UI/Temporal etc),v3.1 - GA,Joseph,2026-09-30,,2026-10-16,,On Track
 December,Kumo 3 on DBx MLFlow,v3.1 - GA,Haowei,2026-09-18,,2026-09-23,,On Track
 December,Kumo 3 on Cloudera,v3.1 - GA,Haowei,2026-09-18,,2026-09-23,,On Track
-December,OpenSourcing PQL as standalone sub repo,v1,Jana / Manush,2026-12-25,,2027-01-22,,On Track
-December,DataScience Skills for NLP Agents,v1,Myunghwan,2026-10-13,,2026-10-16,,
-December,Fraud Blue Print v2,v2,Joe E,,,,,
-January,RFM Model Implementation,V2.5,Matthias,2026-12-18,,,,
+December,OpenSourcing PQL as standalone sub repo (for discussion),v1,Jana / Manush,2026-12-25,,2027-01-22,,On Track
+December,DataScience Skills for NLP Agents,v1 (required for ServiceNow & Oracle),Myunghwan,2026-10-13,,2026-10-16,,
+December,Fraud Blue Print v2,v2 (using a Temporal Graph Transformer + Viz interface)  May need sooner for ServiceNow?,Joe E,,,,,
+January,RFM Model Implementation,V2.5 (No Tab-ICL),Matthias,2026-12-18,,,,
 January,RFM Weights,V2.5,Adi,2026-12-25,,2027-01-22,,On Track
 January,RFM Weights (Snowflake/Databricks),V2.5,Adi,2027-01-01,,2027-01-29,,On Track
 January,RFM Container,V2.5,Alex,2026-12-25,,2027-01-22,,Not Started
 January,RFM Training Data/Recipe,v2.5,Matthias,2026-12-25,,2027-01-22,,On Track
-January,Client for Foundation Models,V2/3,Jana,2026-12-25,,2027-01-22,,
+January,Client for Foundation Models,"V2/3 (Pql support for Forecasting, Anomaly Models)",Jana,2026-12-25,,2027-01-22,,
 January,SDM,v2,Aki/Ramona/Matthias,2026-10-06,2026-10-06,2026-10-14,2026-10-14,On Track
 January,SDM,v3,Aki/Ramona/Matthias,2026-10-28,,2026-11-02,,On Track
 January,SDM,v4,Aki/Ramona/Matthias,2026-11-25,,2026-12-01,,On Track
-January,Kumo 3.5 core,V3.5,Joseph,2026-12-25,,,,Not Started
+January,Kumo 3.5 core,"V3.5 (includes train & inference explainability,   BYO PyG model architecture  cuVS for RecSys",Joseph,2026-12-25,,,,Not Started
 February,Forecasting Model,v2,Aditi,,,,,
 March+,Tabular Language Predictor (TLPs),v1,Vid,,,,,
 March+,RecSys Blue Print (based on Walmart lessoms),v1,Vid,,,,,
-March+,Predictive Maintenance Blue Print,v1,Josh,,,,,
+March+,Predictive Maintenance Blue Print,v1 ( (Using Anomaly foundation model or Fine Tuned architecture supported by Kumo Core 3.5),Josh,,,,,
 March+,Anomaly Model,v2,Aditi,,,,,
