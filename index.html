@@ -63,6 +63,12 @@
   .search-box:focus{border-color:var(--nv-green)}
   .search-box::placeholder{color:var(--text-muted)}
 
+  /* Month dropdown */
+  .month-select{padding:6px 16px;border-radius:20px;font-size:.78rem;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--bg-card);color:var(--text-secondary);font-family:inherit;outline:none;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%2394a3b8'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px;transition:all .2s}
+  .month-select:hover{border-color:var(--border-hover);color:var(--text-primary)}
+  .month-select:focus{border-color:var(--nv-green)}
+  .month-select option{background:var(--bg-card);color:var(--text-primary)}
+
   /* Month group */
   .month-group{margin-bottom:12px}
   .month-header{display:flex;align-items:center;gap:10px;padding:10px 16px;background:rgba(118,185,0,0.06);border-radius:10px;margin-bottom:8px;cursor:pointer;transition:background .2s}
@@ -114,7 +120,7 @@
     <div class="badge">🚀 Product Launch Tracker</div>
     <h1>Kumo Products Launch Tracker</h1>
     <div class="subtitle">Tracking all Kumo product releases across the NVIDIA SW-GPU organization</div>
-    <div class="timestamp"><span class="glow-dot"></span>&nbsp; Last updated: October 27, 2026 15:47 <span id="lastUpdated">loading…</span> · 🔄 Data refreshed daily at 13:00 Europe (GMT+1) &amp; 13:00 PST</div>
+    <div class="timestamp"><span class="glow-dot"></span>&nbsp; Last updated: October 27, 2026 15:42 <span id="lastUpdated">loading…</span> · 🔄 Data refreshed daily at 13:00 Europe (GMT+1) &amp; 13:00 PST</div>
   </div>
 
   <!-- KPI Cards -->
@@ -150,6 +156,17 @@
   <!-- Filters + Search -->
   <div class="filter-bar">
     <input type="text" class="search-box" id="searchBox" placeholder="🔍 Search products, PICs, versions...">
+    <select class="month-select" id="monthSelect">
+      <option value="all">📅 All Months</option>
+      <option value="August">August 2026</option>
+      <option value="September">September 2026</option>
+      <option value="October">October 2026</option>
+      <option value="November">November 2026</option>
+      <option value="December">December 2026</option>
+      <option value="January">January 2027</option>
+      <option value="February">February 2027</option>
+      <option value="March+">March 2027+</option>
+    </select>
     <button class="filter-btn active" data-filter="all">All</button>
     <button class="filter-btn" data-filter="Complete">✅ Complete</button>
     <button class="filter-btn" data-filter="On Track">🔵 On Track</button>
@@ -244,9 +261,9 @@ March+,RecSys Blue Print (based on Walmart lessoms),v1,Vid,,,,,
 March+,Predictive Maintenance Blue Print,v1,Josh,,,,,
 March+,Anomaly Model,v2,Aditi,,,,,`;
 
-const MONTH_ORDER = ["August","September","October","December","January","February","March+"];
+const MONTH_ORDER = ["August","September","October","November","December","January","February","March+"];
 const MONTH_COLORS = {
-  "August":"#6366f1","September":"#a855f7","October":"#f59e0b",
+  "August":"#6366f1","September":"#a855f7","October":"#f59e0b","November":"#76b900",
   "December":"#3b82f6","January":"#06b6d4","February":"#ec4899","March+":"#64748b"
 };
 
@@ -374,10 +391,11 @@ function renderCharts() {
   window.addEventListener('resize',()=>{pie.resize();bar.resize();timeline.resize()});
 }
 
-function renderMatrix(filter, search) {
+function renderMatrix(filter, search, monthFilter) {
   const container = document.getElementById('matrixContainer');
   let html = '';
   MONTH_ORDER.forEach(month => {
+    if (monthFilter && monthFilter !== 'all' && month !== monthFilter) return;
     let items = DATA.filter(d => d.month === month);
     if (filter && filter !== 'all') items = items.filter(d => normalizeStatus(d.status) === filter);
     if (search) {
@@ -423,22 +441,34 @@ function toggleMonth(el) {
 
 // Filters
 let activeFilter = 'all';
+let activeMonth = 'all';
+
+function refreshView() {
+  renderMatrix(activeFilter, document.getElementById('searchBox').value, activeMonth);
+}
+
 document.querySelectorAll('.filter-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     activeFilter = btn.dataset.filter;
-    renderMatrix(activeFilter, document.getElementById('searchBox').value);
+    refreshView();
   });
 });
-document.getElementById('searchBox').addEventListener('input', e => renderMatrix(activeFilter, e.target.value));
+
+document.getElementById('searchBox').addEventListener('input', refreshView);
+
+document.getElementById('monthSelect').addEventListener('change', e => {
+  activeMonth = e.target.value;
+  refreshView();
+});
 
 // Init
 DATA = parseCSV(CSV_RAW);
 document.getElementById('lastUpdated').textContent = new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
 renderKPIs();
 renderCharts();
-renderMatrix('all','');
+renderMatrix('all','','all');
 renderLog();
 </script>
 </body>
