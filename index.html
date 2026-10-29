@@ -120,7 +120,7 @@
     <div class="badge">🚀 Release Launch Tracker</div>
     <h1>Kumo Releases Launch Tracker</h1>
     <div class="subtitle">Tracking all Kumo releases across the NVIDIA SW-GPU organization</div>
-    <div class="timestamp"><span class="glow-dot"></span>&nbsp; Last updated: October 29, 2026 13:39 <span id="lastUpdated">loading…</span> · 🔄 Data refreshed daily at 13:00 Europe (GMT+1) &amp; 13:00 PST</div>
+    <div class="timestamp"><span class="glow-dot"></span>&nbsp; Last updated: October 29, 2026 13:51 <span id="lastUpdated">loading…</span> · 🔄 Data refreshed daily at 13:00 Europe (GMT+1) &amp; 13:00 PST</div>
   </div>
 
   <!-- KPI Cards -->
@@ -204,76 +204,76 @@
 
 <script>
 // ── CSV_RAW injected by extract_launch_data.py ──
-const CSV_RAW = `month,product,version,pic,freeze_planned,freeze_actual,release_planned,release_actual,status
-August,RFM Weights,V2,Won't do HF (per PM),,,,,
-August,RFM NIM,V2,Alex,2026-07-17,2026-07-17,2026-08-24,2026-09-10,Complete
-August,Client for Foundation Models,V1 (pql support for RFM v2.x only),Manush,2026-08-11,,2026-08-24,2026-09-08,Complete
-September,Kumo 3 Studio - EA only (inc UI/Temporal etc),"v3.1 - EA EA for NPCI, Santander, Paypal.",Joseph,2026-09-04,,2026-09-18,2026-09-16,Complete
-September,Kumo 3 SDK (for both pip install and container),"v3.1 - EA EA for NPCI, Santander, Paypal.",Joseph,2026-09-04,,2026-09-04,2026-08-14,Complete
-September,Kumo 3 Core + Snowflake pip install,v3.1 - EA EA for Akhil at Snowflake,Haowei,2026-09-04,,2026-09-23,,Complete
-September,SDM,V1,Aki,2026-08-20,2026-08-31,2026-09-28,,On Track
-October,Kumo 3 Source Code (for core pip install),v3.1 - GA,Min,2026-09-30,2026-10-05,2026-10-16,2026-10-18,Complete
-October,Kumo 3 standalone pip install,v3.1 - GA,Min,2026-09-30,2026-10-05,2026-10-16,2026-10-16,Complete
-October,Kumo 3 on Snowflake ML,v3.1 - GA,Haowei,2026-09-30,2026-10-05,2026-10-16,2026-10-16,Complete
-October,Documentation / Website / Artifacts for Kumo 3,v 1.0 GA,Aleks S,2026-09-30,2026-10-16,2026-10-16,2026-10-17,Complete
-October,Kumo Agent,v 1.0 GA,Adi,2026-10-07,2026-10-05,2026-10-16,2026-10-18,Complete
-October,RFM Model Implementation,V2.1 (no kaggle + SDM base),Vid,2026-09-21,2026-09-21,,,
-October,RFM Weights,V2.1,Alex,2026-09-30,2026-09-21,2026-09-28,2026-09-28,Complete
-October,RFM NIM,V2.1,Alex,2026-09-30,2026-09-30,2026-10-13,,Complete
-October,RFM Training Data/Recipe,V2.1,Won't do (per PM) Will publish with 2.5 once we do not have ICL dependency,,,,,
-October,Client for Foundation Models,Pql support for RFM & TFM,Manush,2026-09-14,,2026-10-09,2026-10-19,Complete
-October,Kumo Agent,Skills to work with sdm-client,Adi,2026-10-07,,2026-10-09,,Complete
-October,TFM Model implementation,v1,Aleks S,2026-09-15,2026-09-15,,,Complete
-October,TFM Weights,v1,Aleks S,2026-09-15,2026-09-15,2026-09-29,,Complete
-October,TFM Container (NIM),v1,Aleks S,2026-09-15,2026-09-17,2026-10-13,,Complete
-October,Documentation / Website / Artifacts for TFM,,Aleks S,2026-09-29,,2026-10-13,,Complete
-October,Forecasting Weights,v1 (Existing Tesseract Model rebranded),Aditi,2026-09-01,,,,Complete
-October,Forecasting Container,v1,Saira,2026-09-01,,,,Complete
-October,Forecasting Training Data/Recipe,v1,We may not do? Confirm with Matthias/Aditi/Saira,,,,,
-October,Anomaly,v1,Saira,2026-09-01,,,,Complete
-October,Anomaly Training Data/Recipe,v1,We may not do? Confirm with Matthias/Aditi/Saira,2026-09-01,,,,
-October,Anomaly Weights,v1 (Existing Tesseract Model rebranded),Aditi,2026-09-01,,,,Complete
-October,SDM,v0.2,Aki/Ramona/Matthias,2026-10-06,2026-10-06,2026-10-14,2026-10-14,Complete
-November,kumo-engine MLOPS,v1.1,Min,2026-11-09,,2026-11-20,,
-November,kumo-engine for FSI,v1.2,Min,2026-11-23,,2026-12-04,,
-November,sdm,"v0.3 (Tabular model Training code release, Time Series Release)",Aki,2026-11-09,,2026-11-11,,
-November,TFM NIM,V1.1,Alex,2026-11-09,,2026-11-20,,
-November,Tech Report,,Matthias,2026-11-09,,,,
-November,TFM MLFlow/DBX ( enablement material would be ideal with GTC washington),V1.1,Adi,2026-11-09,,2026-11-20,,
-November,Kumo relational NIM,v1.2,Alex,2026-11-09,,2026-11-20,,
-November,Demo in databricks of explainability.,,Alex,,,2026-11-20,,
-November,RFM Weights - Databricks (removed Snowflake),v2.2,Adi,2026-11-09,,2026-11-20,,N/A
-November,Paper,NA,Vid,2026-11-16,,,,
-November,Kumo Forecast NIM,v1.0,Alex/Devan,2026-11-09,,2026-11-20,,
-November,Kumo Forecast MLFlow,v1.0,Adi/Devan,2026-11-09,,2026-11-20,,
-November,"Kumo-TS-repo (explainability for anamoly, missingness for forecasting)",,Aditi,2026-11-13,,,,
-November,Kumo Anomaly NIM,v1.0,Alex/Devan,2026-11-09,,2026-11-20,,
-November,Kumo Anomaly MLFlow,v1.0,Adi/Devan,2026-11-09,,2026-11-20,,
-November,Client for Foundation Models - multi-language refactor with Java client for servicenow + explainability,V1.1,Adi,2026-11-09,,2026-11-13,,
-November,Agent Skills phase 2 (Skills for RFM and Tabular models. Databricks Genie is the main customer ). Same PLC as SDM Client.,v1.1 - part of sdm client,Manush,2026-11-09,,2026-11-13,,
-November,TabArena v0.2,v0.2 - we're contributors to existing open source,Myunghwan,2026-11-16,,,,Can Catch Up
-November,Kumo 3 Studio - GA (inc UI/Temporal etc),v3.1 - GA,Joseph,,,,,
-November,Kumo 3 on DBx MLFlow,v3.1 - GA,Haowei,,,,,
-November,Kumo 3 on Cloudera,v3.1 - GA,Haowei,2026-12-22,,,,
-November,OpenSourcing PQL as standalone sub repo (for discussion),v1,Jana / Manush,2026-12-22,,2027-01-22,,On Track
-November,"sdm (TFM Eval, Inference optimizations etc)",v0.4,Aki,2026-12-07,,2026-12-09,,
-November,RFM v2.5,V2.5 (No Tab-ICL),Matthias,2026-12-15,,,,
-November,RFM Weights (Snowflake/Databricks),V2.5,Adi,2027-01-01,,,,On Track
-November,RFM Container,V2.5,Alex,2026-12-22,,,,Not Started
-November,RFM Training Data/Recipe,V2.5,Matthias,2027-01-27,,,,On Track
-November,Client for Foundation Models,"V2/3 (Pql support for Forecasting, Anomaly Models)",Jana,2026-12-22,,2027-01-22,,
-November,Kumo 3.5 core,"V3.5 (includes train & inference explainability, BYO PyG model architecture cuVS for RecSys",Joseph,2026-12-22,,,,Not Started
-November,RelArenea,v0.1 - contribution to external open source,Myunghwan,2027-01-22,,,,Can Catch Up
-February,Forecasting Model,v2,Aditi,,,,,
-February,Fraud Blue Print,,,,,,,
-March+,Tabular Language Predictor (TLPs),v1,Vid,,,,,
-March+,RecSys Blue Print (based on Walmart lessoms),v1,Vid,,,,,
-March+,Predictive Maintenance Blue Print,v1 ( (Using Anomaly foundation model or Fine Tuned architecture supported by Kumo Core 3.5),Josh,,,,,
-March+,Anomaly Model,v2,Aditi,,,,,`;
+const CSV_RAW = `month,product,version,pic,freeze_planned,freeze_actual,release_planned,release_actual,status,excel_section
+August,RFM Weights,V2,Won't do HF (per PM),,,,,,August
+August,RFM NIM,V2,Alex,2026-07-17,2026-07-17,2026-08-24,2026-09-10,Complete,August
+August,Client for Foundation Models,V1 (pql support for RFM v2.x only),Manush,2026-08-11,,2026-08-24,2026-09-08,Complete,August
+September,Kumo 3 Studio - EA only (inc UI/Temporal etc),"v3.1 - EA EA for NPCI, Santander, Paypal.",Joseph,2026-09-04,,2026-09-18,2026-09-16,Complete,September
+September,Kumo 3 SDK (for both pip install and container),"v3.1 - EA EA for NPCI, Santander, Paypal.",Joseph,2026-09-04,,2026-09-04,2026-08-14,Complete,September
+September,Kumo 3 Core + Snowflake pip install,v3.1 - EA EA for Akhil at Snowflake,Haowei,2026-09-04,,2026-09-23,,Complete,September
+September,SDM,V1,Aki,2026-08-20,2026-08-31,2026-09-28,,On Track,September
+October,Kumo 3 Source Code (for core pip install),v3.1 - GA,Min,2026-09-30,2026-10-05,2026-10-16,2026-10-18,Complete,October
+October,Kumo 3 standalone pip install,v3.1 - GA,Min,2026-09-30,2026-10-05,2026-10-16,2026-10-16,Complete,October
+October,Kumo 3 on Snowflake ML,v3.1 - GA,Haowei,2026-09-30,2026-10-05,2026-10-16,2026-10-16,Complete,October
+October,Documentation / Website / Artifacts for Kumo 3,v 1.0 GA,Aleks S,2026-09-30,2026-10-16,2026-10-16,2026-10-17,Complete,October
+October,Kumo Agent,v 1.0 GA,Adi,2026-10-07,2026-10-05,2026-10-16,2026-10-18,Complete,October
+September,RFM Model Implementation,V2.1 (no kaggle + SDM base),Vid,2026-09-21,2026-09-21,,,,October
+September,RFM Weights,V2.1,Alex,2026-09-30,2026-09-21,2026-09-28,2026-09-28,Complete,October
+October,RFM NIM,V2.1,Alex,2026-09-30,2026-09-30,2026-10-13,,Complete,October
+October,RFM Training Data/Recipe,V2.1,Won't do (per PM) Will publish with 2.5 once we do not have ICL dependency,,,,,,October
+October,Client for Foundation Models,Pql support for RFM & TFM,Manush,2026-09-14,,2026-10-09,2026-10-19,Complete,October
+October,Kumo Agent,Skills to work with sdm-client,Adi,2026-10-07,,2026-10-09,,Complete,October
+September,TFM Model implementation,v1,Aleks S,2026-09-15,2026-09-15,,,Complete,October
+September,TFM Weights,v1,Aleks S,2026-09-15,2026-09-15,2026-09-29,,Complete,October
+October,TFM Container (NIM),v1,Aleks S,2026-09-15,2026-09-17,2026-10-13,,Complete,October
+October,Documentation / Website / Artifacts for TFM,,Aleks S,2026-09-29,,2026-10-13,,Complete,October
+September,Forecasting Weights,v1 (Existing Tesseract Model rebranded),Aditi,2026-09-01,,,,Complete,October
+September,Forecasting Container,v1,Saira,2026-09-01,,,,Complete,October
+October,Forecasting Training Data/Recipe,v1,We may not do? Confirm with Matthias/Aditi/Saira,,,,,,October
+September,Anomaly,v1,Saira,2026-09-01,,,,Complete,October
+September,Anomaly Training Data/Recipe,v1,We may not do? Confirm with Matthias/Aditi/Saira,2026-09-01,,,,,October
+September,Anomaly Weights,v1 (Existing Tesseract Model rebranded),Aditi,2026-09-01,,,,Complete,October
+October,SDM,v0.2,Aki/Ramona/Matthias,2026-10-06,2026-10-06,2026-10-14,2026-10-14,Complete,October
+November,kumo-engine MLOPS,v1.1,Min,2026-11-09,,2026-11-20,,,November
+December,kumo-engine for FSI,v1.2,Min,2026-11-23,,2026-12-04,,,November
+November,sdm,"v0.3 (Tabular model Training code release, Time Series Release)",Aki,2026-11-09,,2026-11-11,,,November
+November,TFM NIM,V1.1,Alex,2026-11-09,,2026-11-20,,,November
+November,Tech Report,,Matthias,2026-11-09,,,,,November
+November,TFM MLFlow/DBX ( enablement material would be ideal with GTC washington),V1.1,Adi,2026-11-09,,2026-11-20,,,November
+November,Kumo relational NIM,v1.2,Alex,2026-11-09,,2026-11-20,,,November
+November,Demo in databricks of explainability.,,Alex,,,2026-11-20,,,November
+November,RFM Weights - Databricks (removed Snowflake),v2.2,Adi,2026-11-09,,2026-11-20,,N/A,November
+November,Paper,NA,Vid,2026-11-16,,,,,November
+November,Kumo Forecast NIM,v1.0,Alex/Devan,2026-11-09,,2026-11-20,,,November
+November,Kumo Forecast MLFlow,v1.0,Adi/Devan,2026-11-09,,2026-11-20,,,November
+November,"Kumo-TS-repo (explainability for anamoly, missingness for forecasting)",,Aditi,2026-11-13,,,,,November
+November,Kumo Anomaly NIM,v1.0,Alex/Devan,2026-11-09,,2026-11-20,,,November
+November,Kumo Anomaly MLFlow,v1.0,Adi/Devan,2026-11-09,,2026-11-20,,,November
+November,Client for Foundation Models - multi-language refactor with Java client for servicenow + explainability,V1.1,Adi,2026-11-09,,2026-11-13,,,November
+November,Agent Skills phase 2 (Skills for RFM and Tabular models. Databricks Genie is the main customer ). Same PLC as SDM Client.,v1.1 - part of sdm client,Manush,2026-11-09,,2026-11-13,,,November
+November,TabArena v0.2,v0.2 - we're contributors to existing open source,Myunghwan,2026-11-16,,,,Can Catch Up,November
+November,Kumo 3 Studio - GA (inc UI/Temporal etc),v3.1 - GA,Joseph,,,,,,November
+November,Kumo 3 on DBx MLFlow,v3.1 - GA,Haowei,,,,,,November
+December,Kumo 3 on Cloudera,v3.1 - GA,Haowei,2026-12-22,,,,,November
+January,OpenSourcing PQL as standalone sub repo (for discussion),v1,Jana / Manush,2026-12-22,,2027-01-22,,On Track,November
+December,"sdm (TFM Eval, Inference optimizations etc)",v0.4,Aki,2026-12-07,,2026-12-09,,,November
+December,RFM v2.5,V2.5 (No Tab-ICL),Matthias,2026-12-15,,,,,November
+January,RFM Weights (Snowflake/Databricks),V2.5,Adi,2027-01-01,,,,On Track,November
+December,RFM Container,V2.5,Alex,2026-12-22,,,,Not Started,November
+January,RFM Training Data/Recipe,V2.5,Matthias,2027-01-27,,,,On Track,November
+January,Client for Foundation Models,"V2/3 (Pql support for Forecasting, Anomaly Models)",Jana,2026-12-22,,2027-01-22,,,November
+December,Kumo 3.5 core,"V3.5 (includes train & inference explainability, BYO PyG model architecture cuVS for RecSys",Joseph,2026-12-22,,,,Not Started,November
+January,RelArenea,v0.1 - contribution to external open source,Myunghwan,2027-01-22,,,,Can Catch Up,November
+February,Forecasting Model,v2,Aditi,,,,,,February
+February,Fraud Blue Print,,,,,,,,February
+March+,Tabular Language Predictor (TLPs),v1,Vid,,,,,,March+
+March+,RecSys Blue Print (based on Walmart lessoms),v1,Vid,,,,,,March+
+March+,Predictive Maintenance Blue Print,v1 ( (Using Anomaly foundation model or Fine Tuned architecture supported by Kumo Core 3.5),Josh,,,,,,March+
+March+,Anomaly Model,v2,Aditi,,,,,,March+`;
 
-const MONTH_ORDER = ["August","September","October","November","December","January","February","March+"];
+const MONTH_ORDER = ["July","August","September","October","November","December","January","February","March+"];
 const MONTH_COLORS = {
-  "August":"#6366f1","September":"#a855f7","October":"#f59e0b","November":"#76b900",
+  "July":"#8b5cf6","August":"#6366f1","September":"#a855f7","October":"#f59e0b","November":"#76b900",
   "December":"#3b82f6","January":"#06b6d4","February":"#ec4899","March+":"#64748b"
 };
 
